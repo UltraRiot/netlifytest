@@ -1,0 +1,13 @@
+{
+  "name": "netlify-guitar-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "netlify dev"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "netlify-cli": "^12.0.0"
+  }
+}
