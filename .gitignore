@@ -1,5 +1,6 @@
 # Dependencies
 node_modules
+/node_modules
 /functions/node_modules
 
 # Netlify
@@ -8,7 +9,6 @@ node_modules
 /public
 
 # Build output
-/dist
 /build
 /.next
 
@@ -34,3 +34,6 @@ desktop.ini
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+# Local Netlify folder
+.netlify
