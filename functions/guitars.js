@@ -33,8 +33,8 @@ exports.handler = async (event) => {
         }
 
         if (httpMethod === 'DELETE') {
-            // Extract the ID from the path or query parameters
-            const id = event.queryStringParameters?.id;
+            // Extract the ID from the request body
+            const { id } = JSON.parse(body);
             
             if (!id) {
                 return {
