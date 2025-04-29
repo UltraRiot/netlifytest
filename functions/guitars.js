@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const guitars = require('./guitarData');
 
 exports.handler = async (event) => {
-    const { httpMethod, body } = event;
+    const { httpMethod, body, path } = event;
 
     try {
         if (httpMethod === 'GET') {
@@ -29,6 +29,51 @@ exports.handler = async (event) => {
                     'Access-Control-Allow-Origin': '*'
                 },
                 body: JSON.stringify(newGuitar)
+            };
+        }
+
+        if (httpMethod === 'DELETE') {
+            // Extract the ID from the path or query parameters
+            const id = event.queryStringParameters?.id;
+            
+            if (!id) {
+                return {
+                    statusCode: 400,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({ error: 'Guitar ID is required' })
+                };
+            }
+
+            const initialLength = guitars.length;
+            const guitarIndex = guitars.findIndex(guitar => guitar.id === id);
+            
+            if (guitarIndex === -1) {
+                return {
+                    statusCode: 404,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    body: JSON.stringify({ error: 'Guitar not found' })
+                };
+            }
+
+            // Remove the guitar from the array
+            const deletedGuitar = guitars.splice(guitarIndex, 1)[0];
+
+            return {
+                statusCode: 200,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                body: JSON.stringify({ 
+                    message: 'Guitar deleted successfully',
+                    deletedGuitar 
+                })
             };
         }
 
